@@ -241,7 +241,10 @@ namespace Umbraco.Core
             // although the files version matches the code version, the database version does not
             // which means the local files have been upgraded but not the database - need to upgrade
             logger.Debug<RuntimeState>("Has not reached the final upgrade step, need to upgrade Umbraco.");
-            Level = RuntimeLevel.Upgrade;
+
+            // if unattended upgrades are enabled we need to switch to the Run level to avoid having to restart
+            // the application after the upgrade has run
+            Level = RuntimeOptions.UpgradeUnattended ? RuntimeLevel.Run : RuntimeLevel.Upgrade;
             Reason = RuntimeLevelReason.UpgradeMigrations;
         }
 

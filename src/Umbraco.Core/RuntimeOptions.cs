@@ -22,6 +22,7 @@ namespace Umbraco.Core
         private static bool? _installMissingDatabase;
         private static bool? _installEmptyDatabase;
         private static bool? _installUnattended;
+        private static bool? _upgradeUnattended;
 
         // reads a boolean appSetting
         private static bool BoolSetting(string key, bool missing) => ConfigurationManager.AppSettings[key]?.InvariantEquals("true") ?? missing;
@@ -70,6 +71,15 @@ namespace Umbraco.Core
         {
             get => _installUnattended ?? BoolSetting("Umbraco.Core.RuntimeState.InstallUnattended", true);
             set => _installUnattended = value;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether unattended upgrade is enabled.
+        /// </summary>
+        public static bool UpgradeUnattended
+        {
+            get => _upgradeUnattended ?? BoolSetting("Umbraco.Core.RuntimeState.UpgradeUnattended", false);
+            set => _upgradeUnattended = value;
         }
 
         /// <summary>
