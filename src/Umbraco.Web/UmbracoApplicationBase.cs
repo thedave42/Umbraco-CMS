@@ -6,7 +6,6 @@ using System.Web.Hosting;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.Logging;
-using Umbraco.Core.Logging.Serilog;
 
 namespace Umbraco.Web
 {
@@ -15,7 +14,14 @@ namespace Umbraco.Web
     /// </summary>
     public abstract class UmbracoApplicationBase : HttpApplication
     {
-        private IRuntime _runtime;
+        // needs to be static, if and exception is thrown in Application_Start the current HttpApplication is discarded
+        // and a new instance is created, meaning we loose value if it's already been set.
+        private static IRuntime _runtime;
+
+        /// <summary>
+        /// Gets the current <see cref="IRuntime"/>.
+        /// </summary>
+        protected IRuntime Runtime => _runtime;
 
         /// <summary>
         /// Gets a runtime.
