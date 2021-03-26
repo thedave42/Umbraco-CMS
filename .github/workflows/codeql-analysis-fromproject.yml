@@ -8,6 +8,7 @@ on:
     branches: [v8/contrib]
   schedule:
     - cron: '0 7 * * 2'
+  workflow_dispatch:
 
 jobs:
   CodeQL-Build:
